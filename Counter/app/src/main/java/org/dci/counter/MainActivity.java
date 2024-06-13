@@ -2,14 +2,17 @@ package org.dci.counter;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private int counter1 = 0;
     private int counter2 = 0;
+    private TextView textView1;
+    private TextView textView2;
+    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,74 +27,43 @@ public class MainActivity extends AppCompatActivity {
         // Use the radio group to change the respective label
         // The buttons should only affect the counter that is selected the other remains still
 
-
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        TextView textView1 = findViewById(R.id.textView1);
-        TextView textView2 = findViewById(R.id.textView2);
-        RadioButton checkedRadioButton = findViewById(R.id.radio1);
+        textView1 = findViewById(R.id.textView1);
+        textView2 = findViewById(R.id.textView2);
 
         Button button1 = findViewById(R.id.button1);
-        button1.setOnClickListener(v -> {
-
-            int val = Integer.parseInt(button1.getText().toString().trim());
-            boolean isChecked = checkedRadioButton.isChecked();
-            if (isChecked)
-            {
-                counter1 = counter1 + val;
-                textView1.setText("Counter 1: " + counter1);
-            } else {
-                counter2 = counter2 + val;
-                textView2.setText("Counter 2: " + counter2);
-            }
-        });
-
         Button button2 = findViewById(R.id.button2);
-        button2.setOnClickListener(v -> {
-
-            int val = Integer.parseInt(button2.getText().toString().trim());
-            boolean isChecked = checkedRadioButton.isChecked();
-            if (isChecked)
-            {
-                counter1 = counter1 + val;
-                textView1.setText("Counter 1: " + counter1);
-            } else {
-                counter2 = counter2 + val;
-                textView2.setText("Counter 2: " + counter2);
-            }
-
-        });
-
         Button button3 = findViewById(R.id.button3);
-        button3.setOnClickListener(v -> {
-
-            int val = Integer.parseInt(button3.getText().toString().trim());
-            boolean isChecked = checkedRadioButton.isChecked();
-            if (isChecked)
-            {
-                counter1 = counter1 + val;
-                textView1.setText("Counter 1: " + counter1);
-            } else {
-                counter2 = counter2 + val;
-                textView2.setText("Counter 2: " + counter2);
-            }
-        });
-
         Button button4 = findViewById(R.id.button4);
-        button4.setOnClickListener(v -> {
 
-            int val = Integer.parseInt(button4.getText().toString().trim());
-            boolean isChecked = checkedRadioButton.isChecked();
-            if (isChecked)
-            {
-                counter1 = counter1 + val;
-                textView1.setText("Counter 1: " + counter1);
-            } else {
-                counter2 = counter2 + val;
-                textView2.setText("Counter 2: " + counter2);
-            }
+        radioGroup = findViewById(R.id.radioGroup);
+
+        button1.setOnClickListener(v -> {
+            setCounterValues(-10);
+        });
+        button2.setOnClickListener(v -> {
+            setCounterValues(-1);
+        });
+        button3.setOnClickListener(v -> {
+            setCounterValues(1);
+        });
+        button4.setOnClickListener(v -> {
+            setCounterValues(10);
         });
 
+    }
 
+    private void setCounterValues(int val) {
+
+        if (radioGroup.getCheckedRadioButtonId() == R.id.radio1) {
+
+            counter1 = counter1 + val;
+            String counter1_label = getString(R.string.counter1_label) + counter1;
+            textView1.setText(counter1_label);
+        } else {
+            counter2 = counter2 + val;
+            String counter2_label = getString(R.string.counter2_label) + counter2;
+            textView2.setText(counter2_label);
+        }
     }
 
 
