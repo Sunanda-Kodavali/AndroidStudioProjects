@@ -13,7 +13,7 @@ import okhttp3.Response;
 
 public class StarWarsService {
 
-    public static List<StarWars> getStarWars(){
+    public static List<StarWarsFilm> getStarWars(){
         ObjectMapper objectMapper = new ObjectMapper();
 
         OkHttpClient client = new OkHttpClient();
@@ -28,19 +28,19 @@ public class StarWarsService {
             JsonNode root = objectMapper.readTree(response.body().string());
             JsonNode results = root.get("results");
 
-            List<StarWars> swList = new ArrayList<>();
+            List<StarWarsFilm> swList = new ArrayList<>();
 
             for (JsonNode result : results) {
                 String year = "Year: "+result.get("release_date").asText().substring(0,4);
                 int episodeId = result.get("episode_id").asInt();
                 String title = "Episode "+IntegerToRoman.intToRoman(episodeId)+": "+result.get("title").asText(); // "Episode IV: A New Hope"
                 String director = "Director: "+result.get("director").asText();
-                StarWars starWars = new StarWars(
+                StarWarsFilm starWarsFilm = new StarWarsFilm(
                         year ,
                         title,
                         director
                 );
-                swList.add(starWars);
+                swList.add(starWarsFilm);
             }
 
             return swList;

@@ -1,6 +1,9 @@
 package org.dci.starwars;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,11 +41,19 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView swList = findViewById(R.id.swList);
         swList.setLayoutManager(new LinearLayoutManager(this));
 
-
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         new Thread(() -> {
-            List<StarWars> starWarsList = StarWarsService.getStarWars();
+            List<StarWarsFilm> starWarsFilmList = StarWarsService.getStarWars();
             runOnUiThread(() -> {
-                swList.setAdapter(new SWAdapter(starWarsList));
+                SWAdapter swAdapter = new SWAdapter(starWarsFilmList);
+                swAdapter.setOnItemClickListener((view, position) -> Toast.makeText(
+                        this,
+                        "Hello Hello Hello" + position,
+                        Toast.LENGTH_SHORT).show());
+
+
+                progressBar.setVisibility(View.INVISIBLE);
+                swList.setAdapter(swAdapter);
             });
         }).start();
 

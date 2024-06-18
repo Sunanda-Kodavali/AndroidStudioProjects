@@ -2,13 +2,13 @@ package org.dci.starwars;
 
 import java.util.Objects;
 
-public class StarWars {
+public class StarWarsFilm {
     // 4 - Create a POJO class to hold the required Info: Year, Director, Title
     private final String year;
     private final String title;
     private final String director;
 
-    public StarWars(String year, String title, String director) {
+    public StarWarsFilm(String year, String title, String director) {
         this.year = year;
         this.title = title;
         this.director = director;
@@ -39,8 +39,8 @@ public class StarWars {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StarWars starWars = (StarWars) o;
-        return Objects.equals(year, starWars.year) && Objects.equals(title, starWars.title) && Objects.equals(director, starWars.director);
+        StarWarsFilm starWarsFilm = (StarWarsFilm) o;
+        return Objects.equals(year, starWarsFilm.year) && Objects.equals(title, starWarsFilm.title) && Objects.equals(director, starWarsFilm.director);
     }
 
     @Override

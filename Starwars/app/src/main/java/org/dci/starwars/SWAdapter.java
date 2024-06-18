@@ -11,9 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class SWAdapter extends RecyclerView.Adapter<SWViewHolder> {
-    private final List<StarWars> swList;
+    public interface OnItemClickListener {
+        void onClick(View view, int position);
+    }
+    private final List<StarWarsFilm> swList;
+    private OnItemClickListener onItemClickListener;
 
-    public SWAdapter(List<StarWars> swList) {
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public SWAdapter(List<StarWarsFilm> swList) {
         this.swList = swList;
     }
 
@@ -32,11 +40,17 @@ public class SWAdapter extends RecyclerView.Adapter<SWViewHolder> {
         TextView title = holder.getTitle();
         TextView director = holder.getDirector();
 
-        StarWars starWars = swList.get(position);
+        StarWarsFilm starWarsFilm = swList.get(position);
 
-        year.setText(starWars.getYear());
-        title.setText(starWars.getTitle());
-        director.setText(starWars.getDirector());
+        year.setText(starWarsFilm.getYear());
+        title.setText(starWarsFilm.getTitle());
+        director.setText(starWarsFilm.getDirector());
+        holder.itemView.setOnClickListener(view -> {
+            if (onItemClickListener == null) {
+                return;
+            }
+            onItemClickListener.onClick(view, position);
+        });
     }
 
     @Override
