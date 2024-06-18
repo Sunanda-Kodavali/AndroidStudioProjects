@@ -1,5 +1,6 @@
 package org.dci.starwars;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -16,7 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ProgressBar progressBar;
+    private RecyclerView swList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,24 +40,34 @@ public class MainActivity extends AppCompatActivity {
         // 6 - Parse the downloaded info from JSON to a List<POJO> using Jackson
         // 7 - Pass the List to the adapter and watch the magic happen :D
 
-        RecyclerView swList = findViewById(R.id.swList);
+        progressBar = findViewById(R.id.progressBar);
+        swList = findViewById(R.id.swList);
         swList.setLayoutManager(new LinearLayoutManager(this));
 
-        ProgressBar progressBar = findViewById(R.id.progressBar);
+
         new Thread(() -> {
-            List<StarWarsFilm> starWarsFilmList = StarWarsService.getStarWars();
+            List<StarWarsFilm> films = StarWarsService.getStarWars();
             runOnUiThread(() -> {
-                SWAdapter swAdapter = new SWAdapter(starWarsFilmList);
-                swAdapter.setOnItemClickListener((view, position) -> Toast.makeText(
-                        this,
-                        "Hello Hello Hello" + position,
-                        Toast.LENGTH_SHORT).show());
-
-
-                progressBar.setVisibility(View.INVISIBLE);
-                swList.setAdapter(swAdapter);
+                updateView(films);
             });
         }).start();
 
+    }
+    private void updateView(List<StarWarsFilm> films) {
+        SWAdapter swAdapter = new SWAdapter(films);
+
+        swAdapter.setOnItemClickListener((view, position) -> {
+            Toast.makeText(
+                    this,
+                    "Hello Hello Hello" + position,
+                    Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, FilmActivity.class);
+            intent.putExtra("title", films.get(position).getTitle());
+            intent.putExtra("Opening Crawl",films.get(position).getOpeningCrawl());
+            startActivity(intent);
+        });
+        progressBar.setVisibility(View.INVISIBLE);
+        swList.setAdapter(swAdapter);
     }
 }

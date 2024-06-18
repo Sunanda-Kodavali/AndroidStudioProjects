@@ -7,11 +7,13 @@ public class StarWarsFilm {
     private final String year;
     private final String title;
     private final String director;
+    private final String openingCrawl;
 
-    public StarWarsFilm(String year, String title, String director) {
+    public StarWarsFilm(String year, String title, String director, String openingCrawl) {
         this.year = year;
         this.title = title;
         this.director = director;
+        this.openingCrawl = openingCrawl;
     }
 
     public String getYear() {
@@ -26,12 +28,17 @@ public class StarWarsFilm {
         return director;
     }
 
+    public String getOpeningCrawl() {
+        return openingCrawl;
+    }
+
     @Override
     public String toString() {
-        return "StarWars{" +
+        return "StarWarsFilm{" +
                 "year='" + year + '\'' +
                 ", title='" + title + '\'' +
                 ", director='" + director + '\'' +
+                ", openingCrawl='" + openingCrawl + '\'' +
                 '}';
     }
 
@@ -39,12 +46,12 @@ public class StarWarsFilm {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StarWarsFilm starWarsFilm = (StarWarsFilm) o;
-        return Objects.equals(year, starWarsFilm.year) && Objects.equals(title, starWarsFilm.title) && Objects.equals(director, starWarsFilm.director);
+        StarWarsFilm that = (StarWarsFilm) o;
+        return Objects.equals(year, that.year) && Objects.equals(title, that.title) && Objects.equals(director, that.director) && Objects.equals(openingCrawl, that.openingCrawl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(year, title, director);
+        return Objects.hash(year, title, director, openingCrawl);
     }
 }

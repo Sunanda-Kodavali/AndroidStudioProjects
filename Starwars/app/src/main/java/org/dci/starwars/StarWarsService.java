@@ -35,10 +35,12 @@ public class StarWarsService {
                 int episodeId = result.get("episode_id").asInt();
                 String title = "Episode "+IntegerToRoman.intToRoman(episodeId)+": "+result.get("title").asText(); // "Episode IV: A New Hope"
                 String director = "Director: "+result.get("director").asText();
+                String openingCrawl = result.get("opening_crawl").asText();
                 StarWarsFilm starWarsFilm = new StarWarsFilm(
                         year ,
                         title,
-                        director
+                        director,
+                        openingCrawl
                 );
                 swList.add(starWarsFilm);
             }
