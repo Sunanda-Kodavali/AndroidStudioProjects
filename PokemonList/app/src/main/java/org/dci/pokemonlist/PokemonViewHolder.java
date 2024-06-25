@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PokemonViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView pokemonName;
-    private final TextView pokemonURL;
+        private final TextView pokemonName;
+        private final TextView pokemonURL;
 
     public PokemonViewHolder(@NonNull View itemView) {
         super(itemView);

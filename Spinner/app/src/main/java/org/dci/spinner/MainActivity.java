@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         String[] countries = {"spain", "UK", "USA", "Germany"};
         Spinner countrySpinner = findViewById(R.id.countrySpinner);
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, countries);

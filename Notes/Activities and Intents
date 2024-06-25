@@ -1,0 +1,31 @@
+Android Studio
+
+to create android apps on mobile
+
+We have activities
+
+where we write code to display views with buttons forms etc
+
+inside activity we have layouts like horizantal or vertical display of view with buttons ex
+
+we have diff types of layouts 
+
+for ex linewr layout
+1
+2
+3
+
+constaint layout
+
+1
+      2
+    3
+    
+    here we can set positions for views ex buttons
+
+
+
+Intents:
+Explicit intents: calling another activity that display another screen on mobile
+
+implicit intents: it will another app to open it . ex:email or .. 
