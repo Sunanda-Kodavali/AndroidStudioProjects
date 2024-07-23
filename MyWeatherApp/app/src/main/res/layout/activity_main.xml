@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/weather"
         android:layout_marginTop="16dp"
-        android:hint="Search for a city"
+        android:hint="@string/search_for_a_city"
         android:padding="16dp"
         android:background="@drawable/search_bar_background"
         android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
         android:layout_below="@id/weatherIcon"
         android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
-        android:text="Temperature: N/A"
+        android:text="@string/temperature_n_a"
         android:textSize="18sp"
         android:textColor="@color/primary_text_color"
         android:textStyle="bold"/>

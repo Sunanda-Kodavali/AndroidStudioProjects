@@ -2,4 +2,6 @@
     <string name="app_name">My Weather App</string>
     <string name="weather_icon">Weather icon</string>
     <string name="weather">Weather</string>
+    <string name="temperature_n_a">Temperature: N/A</string>
+    <string name="search_for_a_city">Search for a city</string>
 </resources>
