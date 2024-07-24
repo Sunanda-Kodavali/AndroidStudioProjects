@@ -1,56 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    tools:context=".MainActivity"
+    android:background="@color/background_color"
     android:padding="16dp"
-    android:background="@color/background_color">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/weather"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/weather"
-        android:textSize="24sp"
-        android:textColor="@color/primary_text_color"
-        android:textStyle="bold"
-        android:gravity="center"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/weather"
+        android:textColor="@color/primary_text_color"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 
     <AutoCompleteTextView
         android:id="@+id/searchBar"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/weather"
-        android:layout_marginTop="16dp"
-        android:hint="@string/search_for_a_city"
-        android:padding="16dp"
-        android:background="@drawable/search_bar_background"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/search_bar_background"
+        android:hint="@string/search_for_a_city"
+        android:padding="16dp" />
+
+
+    <ImageButton
+        android:id="@+id/useCurrentLocationButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/searchBar"
+        android:layout_alignEnd="@id/searchBar"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="-61dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/current_location"
+        android:src="@drawable/current_location" />
 
     <ImageView
         android:id="@+id/weatherIcon"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_below="@id/searchBar"
-        android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/weather_icon"/>
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/weather_icon" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/weatherDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/weatherIcon"
-        android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:text="@string/temperature_n_a"
-        android:textSize="18sp"
         android:textColor="@color/primary_text_color"
-        android:textStyle="bold"/>
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

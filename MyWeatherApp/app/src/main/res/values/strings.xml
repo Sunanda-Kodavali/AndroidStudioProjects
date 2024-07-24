@@ -4,4 +4,5 @@
     <string name="weather">Weather</string>
     <string name="temperature_n_a">Temperature: N/A</string>
     <string name="search_for_a_city">Search for a city</string>
+    <string name="current_location">Current Location</string>
 </resources>

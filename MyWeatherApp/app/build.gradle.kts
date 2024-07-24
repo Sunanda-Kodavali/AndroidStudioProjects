@@ -49,4 +49,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.squareup.picasso/picasso
     implementation("com.squareup.picasso:picasso:2.8")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 }
