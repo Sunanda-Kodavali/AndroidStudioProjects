@@ -5,10 +5,13 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private WeatherService weatherService;
     private ImageButton useCurrentLocationButton;
     private AutoCompleteTextView searchBar;
+    private ProgressBar loadingIndicator;
     private LocationCallback locationCallback;
 
     @Override
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         weatherDisplay = findViewById(R.id.weatherDisplay);
         useCurrentLocationButton = findViewById(R.id.useCurrentLocationButton);
         searchBar = findViewById(R.id.searchBar);
+        loadingIndicator = findViewById(R.id.loadingIndicator);
     }
 
     private void setupSearchBar() {
@@ -92,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
         searchBar.setOnItemClickListener((parent, view, position, id) -> {
             String selectedCity = (String) parent.getItemAtPosition(position);
-            System.out.println("Selected city: " + selectedCity);
             fetchWeatherByLocation(selectedCity);
         });
     }
@@ -113,19 +117,34 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
             return;
         }
-        startLocationUpdates();
+        getLastKnownLocation();
+    }
+
+    private void getLastKnownLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+                if (location != null) {
+                    fetchWeatherForLocation(location);
+                } else {
+                    startLocationUpdates();
+                }
+            });
+        }
     }
 
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return; // Permissions not granted, do nothing
+            return; // Permissions not granted
         }
-
+        Log.d("Permission", "Permission granted");
         LocationRequest locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10000)  // 10 seconds
-                .setFastestInterval(5000); // 5 seconds
+                .setInterval(10000)
+                .setFastestInterval(5000);
+
+        loadingIndicator.setVisibility(View.VISIBLE);
 
         locationCallback = new LocationCallback() {
             @Override
@@ -133,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 if (locationResult == null) {
                     return;
                 }
+                loadingIndicator.setVisibility(View.GONE);
                 for (Location location : locationResult.getLocations()) {
                     fusedLocationClient.removeLocationUpdates(locationCallback);
                     fetchWeatherForLocation(location);
@@ -179,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationUpdates(); // Start requesting location updates after permission is granted
+                getLastKnownLocation(); // Start requesting location updates after permission is granted
             } else {
                 System.out.println("Location permission denied");
             }
